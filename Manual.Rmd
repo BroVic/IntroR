@@ -1,0 +1,574 @@
+---
+title: "Introduction to R"
+author: "Victor Ordu"
+date: "7 January 2016"
+output: 
+  html_document: 
+    toc: yes
+---
+
+#	Introduction
+## Prerequisites
+a. Be able to see at a computer screen
+b. Be able to hit the keys of a computer keyboard
+c. Be willing and eager to learn
+d. Be adventurous and courageous
+	
+## What is R?
+R is a programming language developed in the 1980s for the purpose of running statistical analyses amongst other capabilities. From its early days it has become a widely used tool by data scientists and is growing in popularity.
+	
+Your first encounter with R may appear quite intimidating, especially if you don't have any experience in writing computer code, but R has been designed in such a way that you should be up and running in no time.
+
+Let's jump in immediately. Consider these 2 lines of code:
+```{r}
+x <- 1:10
+x
+```
+We have created an "object" in R called x. The arrow-like symbol is called the "assignment key" and the numbers on the right hand side of this symbol effectively mean "1 to 10". When you execute the second line of this code, the R console print out the number 1 through 10. This object "x" is called a vector. Note that you generate the assignment key by typing the "less than" (<) key followed by the "hyphen or dash" (-) key.
+	
+## The pros and cons of using R
+There are several advantages to using R, and as anything in life, there are some disadvantages.
+
+Advantages:
+a. It is free
+b. It is easy to download and install
+c. It has a vibrant community
+d. It produces publication grade graphics
+e. It is easy to learn
+f. It is highly extensible.
+g. It ensure reproducibility of results.
+h. It encourages transparency in methodology.
+	
+Disadvantages
+a. It is difficult to master.
+b. The language can be quirky and is not very intuitive.
+	
+## Download and installation of R
+Downloading R is very easy. To get the latest version, visit www.r-project.org. Click on the "Download" link and you will be taken to the appropriate page. Download the latest version. When installing, you may be given the option of installing 32-bit and 64-bit versions. It is recommended that you install the 64-bit version. If you're not familiar with loading programs from the directory, make sure you check the box "Create Desktop icon".
+	
+## The R Console
+To open your R installationWhen you can double-click your R Desktop icaon. You will encounter the R console. If you are not familiar with command line operations, don't panic.
+When you write a piece of code, R will read the instruction you have passed to it just they way we do - from left to right, top to bottom (yeah, we know that some people read from right to left, but never mind that). Now you're encouraged to create the object "x" as exemplified above. Do it now. Type each line of the code into the console and hit "Enter" after each line. Note that the second line has only on character
+```{r}
+	# Create an object x
+  x <- 1:10
+	x
+```
+Examine your output in the console. What do you see? 
+Note that though there are 3 lines of script here, only 2 of these lines are actual R code. The first line that starts with "#" is a comment line and will not be executed by R. It is good practice to add comments to code as this makes for readability and helps others to understand you approached your task.
+	
+## Objects
+The operation you carried out in the previous section is very typical of a coding exercise in R. R is an object-oriented language and the creation of objects is central to everything you will be doing in R. R objects can be classified according to their homogeneity or their dimensionality. Homogenous objects have contain values of the same type e.g. numbers, while heterogenous objects can contain different types of values e.g. numbers and characters. In terms of dimensionality, some objects are one-dimensional, while others are multi-dimensional. This will be more clearly explained in the next section.
+  Quiz: How would you describe the object "x" you created? Is is homogenous? Is it multi-dimensional?
+	
+## Vectors
+Vectors are R's building blocks. You can create vectors and you can also import them from other users. They are the fundamental data structure of R.
+There are four (4) main types of vectors that we will be using to carry out most R operations. They are:
+a. Integer
+b. Character
+c. Logical
+d. Double
+	  
+You are now going to create these vectors. Run the following lines of code:
+```{r}
+age <- 50
+sex <- "female"
+employed <- TRUE
+height <- 1.32
+
+# output of the operations
+age
+sex
+employed
+height
+```	  
+You have now created 4 vectors of the integer, character, logical and double types, respectively. Note that all of them are vectors of length 1 and that there is no such thing as a vector of length 0 in R. Also note that we have given our vectors some meaningful names and that these look a lot like real-life data. However, these data do not indicate whether they come from a particular individual or not.
+The concatenate function
+When you want to create a vector > length 1, one useful function in R is the concatenate (or combine) function (The word concatenate means to "make a chain"). So when you are creating unidimensional objects like vectors, this function is indispensible. It is represented by the symbol "c()". So we are going to create longer vectors.
+```{r}
+age <- c(50, 23, 45, 38, 43, 23)
+age
+
+sex <- c("male", "female", "male", "female", "female", "female")
+sex
+
+employed <- c(TRUE, TRUE, TRUE, FALSE, TRUE, FALSE)
+employed
+
+height <- c(1.54, 1.80, 1.96, 1.22, 1.32, 1.39)
+height
+```
+
+Finally, we can create NULL vectors
+```{r}
+first.name <- c("Eze", "Hassan", "Modupe")
+first.name
+first.name <- NULL
+first.name
+```
+	 Quiz: Try creating a vector of length > 1 without using the c() function. What happened? Try again using c(). What happened this time?
+	 Look at the integer and double vector. what are their differences and similarities?
+	
+## Workspace
+At this stage, most of the operations you will be carrying out in R are done in what is called a "workspace". You may liken this to a desk or table on which you have laid out items you want to work with. The objects you create will be places on this virtual desk for you to work with as you please. So far, the objects that you have created are there. To view them, run
+```{r}
+ls() # lists all the objects in the workspace
+```
+You can now see, the objects you created.
+	
+To remove an object from the workspace
+```{r}
+rm(x) # removing x from the workspace
+ls()
+```
+	
+To clear the workspace, we will use a combination of the rm() and ls() functions.
+```{r}
+rm(list = ls()) # clear the workspace
+ls()
+# workspace now empty
+```
+
+Removing an object is not the same thing as creating an empty vector.
+```{r}
+home <- c("duplex", "bungalow", "hut")
+home
+ls() # 'home' is in the workspace
+home <- NULL
+home
+ls() # 'home' is still in the workspace
+rm(home)
+ls() # 'home' is no longer in the workspace
+```
+
+Note that there is no "undo" function (if there is I don't know, but with R you can never tell) and there is no way to return our items to the workspace other than to re-run the code. To help you do this, R keeps are record of the history of the code you've passed to the console that can be easily accessed via the up-arrow key. If you call the history() function, a list of your recent commands will be presented for you to use. Try it out now.
+	
+Finally, R has given you the option of creating scripts of your code that you can put into a text file and save on your devices (go to File > New Script). When you finish working, save the file to your working directory.
+	
+The working directory is where all the data from your R operations will be stored. It good practice to use different working directories for different R operations. For instance, if you are conducting analyses on infant formula feeding, it would be wise for you to use different working directory from the one you used to analyze data on car emissions. To know which directory you are working in run
+```{r}
+getwd()
+```
+
+To set the working directory we use the command setwd(<filepath>)
+```{r}
+setwd("C:/Users/BRIAN/Documents/2-Biz/GHMC/R Training")
+getwd()
+dir() # lists all the folders and files in the directory
+```
+Exercise:
+create a folder on your computer for your R Training sessions (do this outside of R!). Next, return to R and set the working directory of your R session to this newly created directory. 
+
+## Getting help
+When you are working with R, you're going to need a lot of help as you conduct your analyses. This is not because you don't know what your doing, but that's just the way it works with R. Even the most experienced users of R use these features on a regular basis in order to get the most out of it. Like we said earlier, R is difficult to master. This is partly because of its extensiblity and constant change it undergoes (the R Consortium releases major updates every 6 months!).
+  
+To get help on any R function, do the following
+```{r}
+# use ?function() to read the R documentation e.g.
+?getwd()
+
+# to see some examples of code
+example("getwd")
+```
+Sometimes, understanding the R documentation can be a bit challenging for newcomers. However, there are some useful sites you can visit to get quick tips on how to carry out certain operations in R e.g. Quick R. The official FAQs of the R Consortium are also useful for technical information. Sites like Stackoverflow have so many R questions already answered and you can also ask your own questions as well. One great thing about the R community is that you will find them eager to assist. If you're on Twitter, use the hashtag #rstats to find tweets about R and find a few people to follow such as @hadleywickham and @jennybryan.
+
+As you begin to work with R, you will discover, that there is really no "one way" of doing anything. Rather the application is so robust that there are several ways of approaching a challenge and arriving at similar or even the same conclusion. Thus, this training is not meant to lock you down in the author's ways, but to give you a launching pad for you to explore for yourselves. As we go further into the meat of the matter, you are encouraged to play around with the code and make as many mistakes as possible, for that is how you can quickly learn what works and what doesn't.
+
+Welcome to the wonderful world of R!
+
+  Assignment
+  
+# Two-dimensional data structures
+Most of you are probably used to seeing your data in a 2-dimensional format, you know, something that looks like a table. By 2-dimensional, we mean that each data element has two reference points, and they are typically represented in a row-column format. Well, data can actually come in different forms, just like the vectors we described in the last section. But because 2-dimenstional objects are the most common, we are going to start from there, so that you can quickly get to see how R works in practice. We will go back to the other data formats later.
+
+So, in R, you will be encountering 2 types of 2-dimensional objects - matrices and dataframes. Before we proceed, I want to alert you that occasionally you will see some more complex code - don't be alarmed or intimidated. The secret to learning code is to never, ever be scared if you see something new. Besides, we will use comments, as usual, to make our code more readable and easy to understand.
+
+## The Matrix
+To create one we call the matrix() function
+```{r}
+# Create a matrix and assign it the label 'mat'
+mat <- matrix(1:10)
+mat
+```
+We will now pass other arguments to this function to modify 'mat'. Please open the R documentation on this function to see the different arguments that can be used. Run this code: ?matrix() to open the help page.
+
+```{r}
+mat2 <- matrix(1:12, nrow = 2) # matrix with 2 rows
+mat2
+
+mat3 <- matrix(1:12, nrow = 3) # matrix with 3 rows
+mat3
+```
+By default, the matrix is created in a columnwise fashion. You can see this by the order of the numbers in the matrix and confirm it from the default arguments in the help page (byrow = FALSE). Now let's tweak this a bit so you understand it better. Remember to be advenurous and experiment. R won't bite you if you mess up!
+```{r}
+mat3_rowwise <- matrix(1:12, nrow = 3, byrow = TRUE)
+mat3_rowwise
+mat3         # compare them
+```
+You can also create matrices using the other types of data elements you used in making atomic vectors in the last section.
+```{r}
+mat_char <- matrix(rep(c("jane", "john", "bob", "emeka", "zainab"),
+                       times = 6)) # we called 3 functions - matrix(), rep() & c() to create a matrix by repeating each of the characters 6 times for a total of 30
+mat_char
+
+mat_char <- matrix(mat_char, nrow = 3) 
+mat_char
+str(mat_char) # this is a character matrix with 3 rows and 10 columns
+```
+There is one thing to note about matrices. Just like atomic vectors, they can contain only one type of element - integer, double, character or logical. This is how they differ from dataframes, which can contain different data types in the same object. We will discuss those in the next section.
+
+Exercise:
+1. Create a logical matrix called 'employed' with 3 rows (Tip: create a vector first)
+2. Type and run this code to create a double vector (Note: this is a random number and your output will appear to be different)
+```{r, echo=FALSE}
+rand <- rnorm(16) 
+rand
+```
+and use it to create a double matrix that has **at least* 2 columns (Tip: Peep at the R documentation).
+
+## Dataframes
+This is a common structure that most people that work with any kind of data are familiar with. Congratulations, you have arrived at a point where you can begin to do some data wrangling!
+
+Like the matrix, a dataframe has rows and columns. Usually, the variables in a dataset are arranged from top to bottom in columns, while the individual observations in the dataset are arranged from left to right in rows.
+
+You can create a data.frame from scratch or you can import one outside R (say, a drive or from the web). For this particular section we will focus on data.frames created in R. For information on importing data.frames, go to the section **Importing Data**.
+
+To create a dataframe, you will use the function data.frame(). To do this, we are going to create some vectors and for them to fit into a dataframe, they will have to have the same length. You may now look up data.frame() in the R documentation.
+```{r}
+key <- LETTERS[1:20] # Capital alphabet from nos. 1 to 20
+
+height <- round(rnorm(20, mean = 1.20, sd = .30), 2) # 20 random mormally distributed values with mean of 1.2 and standard deviation of 0.3, rounded to 2 decimal points
+
+age <- seq(21, 40, by = 1) # a sequence of numbers beginning from 21 and ending at 30 increasing by 1
+
+location <- c(rep("Abuja", 4), "Lagos", "Kaduna", "Jos","" ,"" , rep("not known", 3), "Port Harcourt", "Maiduguri", "Gombe", "Lsgos", "Makurdi", "Sokoto", "Akure", "Minna")
+
+sex <- c("male", "female", "female", "male", "female", "female", "female", "male", "male", "male", "female", "female", "", "female", "", "male", "female", "male", "female", "female")
+
+
+mydata <- data.frame(key, age,  sex, height, location)
+mydata  # your data frame
+is.data.frame(mydata)
+```
+This dataframe is made up of integer, double and character vectors. Note that there are some gaps in the data, which is almost always the case in real-life situations.
+
+**Exploring Dataframes**
+When you have a dataframe in your workspace you want to explore it a little, there are some functions that are regularly called to allow you to know some of the characteristics of the dataframe.
+```{r}
+dim(mydata) # dimensions of the dataframe (rows, columns)
+str(mydata) # lists the variables, their types, and few values
+head(mydata) # will show the first 6 observations 
+tail(mydata) # will show the last 6 observations
+summary(mydata) # summarizes each variable; output will depend on its type
+```
+Notice that str() showed that our character vectors are designated as factors. By default, this function will convert characters (otherwise called strings) into factors, which in R is just another name for categorical variables (check any statistics text to know the types of variables). This may or may not be desirable, depending on the nature of your dataset and the type of analysis you want to carry out. To stop this behaviour, set *stringsAsFactors* to 'FALSE' (see help)
+```{r}
+mydata <- data.frame(key, age,  sex, height, location, stringsAsFactors = FALSE)
+str(mydata)
+```
+Oftentimes, when importing a dataset into R, you may want to replace the gaps with the value 'NA'. This practice is immensely helpful when you want to carry out data cleaning as it makes it more efficient than if you just left the gaps. We will discuss this when we talk about **Importing Data**.
+
+Note that a dataframe contains vectors of the same length. To vectorize the column we will perform some elementary **subsetting** using the '$' operator. Recall that this symbol first appeared when we examined the structure of the dataframe using str()
+```{r}
+str(mydata)
+mydata$age
+
+ls() # note that both "age" and "mydata$age" are in the workspace
+typeof(mydata$age)
+typeof(age)
+identical(mydata$age, age) # these 2 different objects but they are identical!
+```
+This kind of subsetting operation is very useful in dealing with dataframes. You can carry out specific tasks focus on particular variables. We will attempt to carry out a few of them. As an appetizer, we will now visualize the distribution of 'age' and 'height'.
+```{r}
+# plot some variable
+plot(mydata$age) # this is expected since age has an arithmetic progression
+plot(mydata$height) # looks more like real data
+hist(mydata$height, breaks = 10)
+boxplot(mydata$height)
+```
+
+You can also use this operation to apply functions to the variable e.g.
+```{r}
+sum(mydata$height) # cumulative heights
+mean(mydata$age) # arithmetic mean of age
+max(mydata$height) # maximum height in dataset
+```
+
+You can use it to alter a variable
+```{r}
+# Change the type
+typeof(mydata$age)
+mydata$age <- as.integer(mydata$age)
+typeof(mydata$age)
+```
+
+Realise that we are using '$' to subset the dataframe i.e. isolate its component vectors. Vector subsetting, which allows you to access individual values, will be discussed in under the topic **Indexing**.
+
+
+This operation can be used to also alter the values in a variable - after subsetting, just assign the desired values. This is the same thing as what we did with atomic vectors. R accepts the new object as the true values of the vector/column and all the old values are lost. Using the same principle, we can delete or add a column to the dataframe via the 'assign' key. When you are doing this, what you are telling R is that there is already vector in the dataframe that is either NULL or labeled by a certain name and that you are now assigning so-and-so values to it. 
+```{r}
+mydata$height # note initial values
+mydata$height <- round(rnorm(20, mean = 1.6, sd = .4), 2)
+mydata$height # new values have been assigned
+
+mydata$height <- NULL
+mydata$height 
+str(mydata) # column has been deleted unlike the case of an atomic vector.
+
+dim(mydata) # dataframe has 4 columns
+mydata$height <- round(rnorm(20, mean = 1.6, sd = .4), 2)
+mydata$height # note completely new set of values; rnorm() performs random assortment
+dim(mydata) # 5 columns
+```
+
+Finally, let's talk about the dimension names. In most dataframes, it is unnecessary and even impractical to name the rows. By default, data.frame() assigns integer values as row names. Column names are a must in R dataframes - if you create or import a dataframe that has unnamed variable, R will automatically assign names. You can try this out later when we start importing dataframes. Using colnames(), we can either determine the names of our variables or we can use it to edit existing names.
+```{r}
+colnames(mydata)
+colnames(mydata) <- c("primary key", "howold", "GENDER", "body_length") 
+colnames(mydata) # Oops! something went wrong. It is easy to miss out one of the variable and R won't even warn you! Not only did it create an 'NA' variable, it our variables have shifted and don't make sense.
+
+anyNA(colnames(mydata)) # always do this to cross-check for 'NAs'
+colnames(mydata) <- c("primary key", "howold", "GENDER", "town/city", "body_length") # problem fixed?
+colnames(mydata)
+anyNA(colnames(mydata)) # no missing value
+```
+
+**Quiz:**
+Look carefully at these new variable names of *mydata*. Review in your mind the operations we have been carrying out, like subsetting the dataframe. Do you foresee any problems with using these column names? Think about it first and then try it out for yourself in the R console. What happened? Suggest ways to fix it and experiment again in the console.
+
+**Answer:**
+Generally, it is best to use **'oneword'** as variable names. R does not allow spacesor special characters in variable names, with the exception of "underscore" and "dot". Thus, *mydata$body_length* and *mydata$body.length* are acceptable nomenclature in R.
+If for some reason you MUST circumvent this rule, you can enclose the name in back-ticks (` `) and R will accept the variable name the way it is. 
+```{r}
+# This will work...
+mydata$`primary key`
+mydata$`town/city`
+```
+
+# Importing Data
+We have take a look at dataframes, which are probably the most ubiqitous data structures a worker or student would have to deal with (this should be an interesting hypothesis to test).
+
+Even though we can create dataframes in R, most often you will be using datasets that were generated outside of R. In fairness to the work of other tech innovators, R cannot do everything and even if it could, some programs carry out certain tasks more efficiently than others. Thus, you will more likely find it easier to create a dataframe in spreadsheet programs like MS Excel or in relational database programmes such as MS Access or MySQL. Another good thing is that there are several R packages that allow us to import data from a variety of formats including statistical softward like SPSS, STATA and SAS. However, for the purpose of this introductory course, we will focus on more central themes and these you can use as a bridge to connect your R installation with any other program out there.
+
+Before you proceed, kindly check what is in your workspace and then clear it if it's not empty. If you can remember the code, refer to **Workspace**.
+
+## Import from clipboard
+Data can be imported using the clipboard. Visit this **link** to download a dataset in Excel format, select the range of cells for the entire table into R and copy them (for Windows use CTRL + C; OSX use CMD + C).  Next open your R session and run the following code
+```{r}
+extdata <- read.table("clipboard", header = TRUE, sep = "\t") 
+head(extdata)
+
+# For Mac users:
+# extdata <- read.table(pipe("pbpaste"), header = TRUE, sep = "\t")
+```
+
+## Import from a text file
+For beginners in R, the best format to use in importing data is without doubt a the text file. The good thing about these files is their relative stability, particularly when transfered between different drives. Also they are lightweight, with little or no formatting. In short, you can rarely go wrong with a text file. This is what a text file looks like when opened in Notepad...
+
+The file in this example is a .csv file (Comma Separated Values). This file can easily be generated from a spreadsheet or database application like MS Excel or MS Access, respectively. (In Excel, you save the open spreadsheet as .csv, while in Access, export your table to .CSV format). After you have acquired your text file, you can import it into R by running read.csv(). But before you proceed, please open the text file "*life_Nigeria_2000*" in Notepad (View the file in Windows Explorer, right click and select Open With..., then select Notepad)
+```{r}
+read.csv("life_Nigeria_2000.csv") # text file has been read but not yet in workspace
+imported_data <- read.csv("life_Nigeria_2000.csv") #study the default values
+imported_data
+
+# You may view the dataset in a more readable form
+View(imported_data)
+```
+
+Although .csv are the simplest and most commonly used formats for R and other data management applications, there  are other functions for importing data for the more advanced user, which depend on the way the files were saved e.g. read.fwf (for Fixed Width Format files).
+
+## Import from the Web
+When you want to import data from the web, you will have to use the URL of the webpage. Many datasets that are available online, have been uploaded in the .csv format, for the very reasons stated earlier and you just need to copy and past the link and insert it as an argument in the function.
+```{R}
+#another_import <- read.csv("http://...")
+#another_import
+```
+
+You may also import from search pages by entering the URL from the address bar - but make sure that it contains the search term.
+```{r}
+#yet_another <- readLines("http://www.ncbi.nlm.nih.gov/gds/?term=diabetes")
+#head(yet_another) # use this function as the object may contain thousands of lines
+```
+
+## Other formats
+You can read data from other formats into R, but these are usually found in various R packages that are available on CRAN or Github. We will not try to use them at this stage but you are free to explore these on your own.
+
+# Indexing
+This is a crucial part of handling R objects and with this topic, you are now delving into data operations proper. Indexing allows you to identify discrete points in the the data set as well as making important manipulations such as data cleaning. Indexing applies to all R objects and we will now look at this more closely. The basic operator R uses for indexing is the hard bracket ```[]```.
+
+## Vectors
+Just like much of R, the principles of indexing find their basis in atomic vectors, and we will dwell on this extensively in this section, as what you learn here will can be applied to the other data structures.
+```{r}
+a <- c(5, 6, 8, 2, 0, 9, 1, 7)
+a
+a[4] # 4th element in vector a
+
+# also works for other types of atomic vectors
+b <- c("Tom", "Dick", "Harry", "Sally", "Alice", "Mary")
+b
+b[6] # 6th element in the vector
+
+c <- c(FALSE, FALSE, TRUE, TRUE, FALSE, F, F, T, T, T, F, T) # note that we can use 'TRUE/FALSE' and 'T/F' interchangeably
+c
+c[2]
+```
+Notice (again) that when you print out the object in the console, there is that number [1] on the left hand side and if your vector is wrapped into the next row, you will see another number in the hard brackets. This number is the 'index' and it always counts from number 1 from left to right.
+
+We can also use negative indexing - this works for numerical (integer and double) vectors.
+```{r}
+a[-4]
+```
+
+Indexing can be done over multiple points or for a range of points in the vector:
+```{r}
+a[c(1, 2, 3)] 
+b[c(2, 4, 6)]
+a[c(4:6)]
+b[c(2:4, 6)]
+```
+Quiz: Try runnning this code ```a[1, 2, 3]```. What happened? can you explain it? (Tip: Look at the section **Dataframes**)
+
+This kind of indexing is very useful when you can keep track of the indices with your eyes. However, as the size and complexity of the data structure increases, this becomes impractical and we have to resort to other ways of identifying our values.
+
+The code we just ran identified particular elements in the vector by their indices i.e. their position within the vector. We can also use boolean operators to carry out indexing using the **values** themselves.
+```{r}
+a; a[a == 2]
+b; b[b == "Mary"]
+c; c[c == FALSE]
+```
+
+This operation is very important in practical terms. Now, consider this vector
+```{r}
+# create a vector that contains a random sample of size 1000, with replacement, from a population of 10 million values with a population mean of 45.344 and standard deviation 6.74 (values rounded to the first decimal)
+my_sample <- round(sample(rnorm(1e7, 45.344, 6.74), size = 1e3, replace = TRUE), 1)
+my_sample
+```
+What if we wanted to identify the particular values are equal to 42.9?
+```{r}
+# extract the values in  my_sample that are equal to 42.9
+my_sample[my_sample == 42.9]
+```
+At this point I will introduce the boolean (logical) operators because they are very useful in indexing. See the table below
+
+*Operator*      *Meaning*
+  ==            equal to
+  !=            not equal to
+  <             less than
+  >             greater than
+  <=            less than or equal to
+  >=            greater than or equal to
+  &             and
+  |             or
+  
+Now let's use these operators to carry out indexing. Also feel free to experiment with these operators
+```{r}
+a[a == 7]
+b[b != "Sally"]
+a[a < 5]
+a[a >=5]
+c[c == TRUE]
+```
+Quiz: 
+Try these two lines of code and discuss the output.
+```{r}
+c[c < TRUE]
+c[c > TRUE]
+```
+
+Indexing is extremely useful for manipulating the elements of a vector and to accomplish this in R, we use the assignment ``` <- ``` operator. In essence, you "pick on" an index position in a vector and assign a new value to it.
+```{r}
+a[2]
+a[2] <- 99
+a[2]
+a
+
+# you can do it in multiples
+a[c(3:5)] <- 100 # the value 100 is assigned to positions 3 through 5 in vector "a"
+a
+```
+Quiz;
+After entering data on names of subjects into vector b, you suddenly realize that Sally and Dick were not actually part of the dataset, and you want to replace with Robert and Michelle. Use the indexing and assignment operations to correct the error and print out the result to the R console.
+
+## Matrices
+Indexing applies to matrices and we also use the same operator, ``` [] ```. However, because there are two dimensions in a matrix, there are 2 reference points that apply to each value in the object - rows and columns. Thus, when you apply the hard bracket, you should be able to map it to these two dimensions. This is accomplished by dividing the content of the operator into 2 spaces - one for row and the other for column viz ``` [<row>, <column>] ```. This is apparent from a basic matrix on printing it out in the console.
+```{r}
+matrix(1:12, nrow = 3)
+```
+Once more, notice the indices are indicated on the margins of the matrix and in this particular matrix (not that we didn't say "object", as we did not assign this matrix to any object in the workspace). Thus, ```[3, 4] ``` represents the 2rd row and the 3rd column, which in this instance is 12. You can now experiment a bit with this level of indexing.
+
+```{r}
+leap_year <- seq(from = 1700, by = 4, length.out = 200)
+my_mat <- matrix(leap_year,
+                 ncol = 10,
+                 byrow = TRUE,
+                 dimnames = list(decade = c("I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX"), year = c("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"))) # creating a matrix with named dimensions
+head(my_mat)
+
+my_mat[7, 4] # The 4th year in the 7th decade is
+my_mat[c(3:7), c(5, 6)] # submatrix containing years 5 & 6 of the 3rd to 7th decades
+```
+
+We have a named matrix *my_mat*, and we can carry out indexing using the names as reference points instead just the numbered indices. This helps a lot when dealing with very large matrices - rows/columns can come in the thousands, if not millions. You can simply call them by name!
+```{r}
+my_mat[decade = "IV", year = "five"]
+my_mat["IV", "five"] # same thing
+
+# select a range of cells
+nineteen_century <- my_mat[c("III", "IV", "V"), c("six", "seven", "eight", "nine", "ten")]
+nineteen_century
+```
+
+Finally, indexing can be used to assign new values to a matrix and boolean operators work here as well.
+```{r}
+# Indexing a character matrix
+b <- c("Tom", "Dick", "Harry", "Sally", "Alice", "Mary")
+char_matrix <- matrix(b, nrow = 3)
+char_matrix
+char_matrix[3, 2] <- "Maxwell" # assign a new value
+char_matrix
+
+# Using boolean operators 
+char_matrix[char_matrix == "Maxwell"] <- "Mary"
+char_matrix
+
+char_matrix[char_matrix == "Tom" | char_matrix == "Alice"] <- "Siblings"
+char_matrix
+```
+
+## Dataframes
+
+
+# R Graphics
+## Using basic graphs
+
+## Customizing your graph
+
+## Creating multiple plots
+
+
+# Basic Data Analysis in R
+## Data Cleaning
+
+## Exploratory Data Analysis
+
+
+
+# The Next Level
+What remains to be learnt
+1. **"apply"** family of functions
+2. Writing your own functions
+3. Graphics on steroids - ggplot2 package
+4. Shiny
+5. Writing an R package
+
+## R Packages
+
+## R Studio
+
+## Github
+
+## Collaboration
+
+## Resources
+
+
