@@ -106,6 +106,15 @@ first.name
 first.name <- NULL
 first.name
 ```
+
+Before concluding this chapter, it is important to point out that R is case-sensitive, so care has to be taken as it may or may not return an error and if the latter occurs, you will have unexpected results that would affect your entire analysis.
+```{r}
+country <- c("Nigeria", "United Kingdom", "Paraguay", "Japan", "Germany", "South Africa", "Jamaica")
+# length(Country) # error
+
+identical("Queen", "queen")
+
+```
 	 Quiz: Try creating a vector of length > 1 without using the c() function. What happened? Try again using c(). What happened this time?
 	 Look at the integer and double vector. what are their differences and similarities?
 	
@@ -355,8 +364,8 @@ Before you proceed, kindly check what is in your workspace and then clear it if 
 ## Import from clipboard
 Data can be imported using the clipboard. Visit this **link** to download a dataset in Excel format, select the range of cells for the entire table into R and copy them (for Windows use CTRL + C; OSX use CMD + C).  Next open your R session and run the following code
 ```{r}
-extdata <- read.table("clipboard", header = TRUE, sep = "\t") 
-head(extdata)
+#extdata <- read.table("clipboard", header = TRUE, sep = "\t") 
+#head(extdata)
 
 # For Mac users:
 # extdata <- read.table(pipe("pbpaste"), header = TRUE, sep = "\t")
@@ -536,39 +545,181 @@ char_matrix
 ```
 
 ## Dataframes
+To index dataframes, R uses a combination of the operations applicable to vectors and matrices. 
+```{r}
+# load data
+my_data <- read.csv("life_Nigeria_2000.csv", header = TRUE, stringsAsFactors = TRUE, na.strings = "")
+dim(my_data)
+head(my_data)
+str(my_data)
+colnames(my_data)
+
+my_data[2]
+
+my_data[[2]]
+is.factor(my_data[[2]])
+
+my_data[5, 9]
+
+my_data$Actual.deaths[6]
+
+my_data[8, "Actual.deaths"]
+
+my_data[my_data$Sex == 'both', ]
+
+my_data[my_data$Actual.deaths < 10000, ]
+```
 
 
 # R Graphics
 ## Using basic graphs
+One of the major strengths of R is data visualization for exploratory data analysis and for communicating the story of your data to various classes of audiences. A basic R installation comes with powerful graphics capabilities and there are also packages that have been developed to extend this to phenomenal limits. Without gainsaying, this is where R really shines. 
 
-## Customizing your graph
+In this training manual, the focus will be on the basic graphics functions which will be sufficient for most of the visualizations one would want to create within the workplace or even at school. The student is encouraged to take a look at packages like ggplot2, ggvis, ggtree, lattice, etc., and learn to use them as he/she advances in the art of plotting with R.
+
+It is difficult to discuss data visualization without explicitly discussing statistical methods, which is beyond the scope of this manual. Attempt will however be made to establish the linkage between the two. 
+
+## Some basic of R plots
+The plots that will be treated are principally the basic types that are used in exploring and presenting data. They are:
+ - The bar chart
+ - The histogram
+ - The Box-and-Whiskers plot
+ - The Scatterplot
+
+**Some supportive knowledge**
+Aside from plotting charts, data can be summarised, presented and communicated in other formats, notably tables. Also, when we are trying to create certain visualizations, it may be necessary to summarize the data in this format and passing the resulting output as an argument to a function that generates a plot. In R, to tabluate data, we use the ``` table() ``` function.
+
+# obtain a frequency count for sex
+head(mydata)
+sex <- mydata$sex
+table(sex)
+# Some data cleaning...
+as.character(mydata$sex); mydata$sex[mydata$sex == ""] <- "female"
+mydata$sex <- factor(mydata$sex)
+table(mydata$sex)
+
+# can crosstabulate two variables
+table(mydata$location, mydata$sex) # notice problems caused by typo!
+
+# can also crosstabulate across multiple variables using xtabs()
+
+Often, the data are summarised in terms of proportions rather than counts - and to do this, R has the ``` prop.table() ``` and this function uses the table rather than the object as its main argument
+```{r}
+prop.table(table(mydata$sex))
+```
+
+When trying to visualize your data, one quick thing that can be done is to call plot(), which is a function that quickly draws a chart of the whole or parts of the dataset, depending on how you call it.
+
+# plot(mydata) plots as many variables as are available
+plot(mydata$sex)
+plot(mydata$height)
+# note the different kinds of plots rendered based on level of variable measurement
+
+**The Bar Chart**
+The bar chart is usually built with categorical variable, which, in R, are represented by factors, with levels representing the corresponding categories. The 
+
+barplot(table(mydata$sex))
+barplot(prop.table(table(mydata$sex)))
+
+
+**The Histogram**
+The histogram is looks like the barchart but is used to plot numerical vectors
+
+hist(mydata$height)
+
+
+
+**The Box-and-Whiskers Plot**
+Also simply known as the box plot, this chart is useful for displaying numerical data distributions that are skewed. Detailed discussions on interpretation and uses of box plots are beyond the scope of this course.
+
+boxplot(mydata$height)
+boxplot(mydata$age ~ mydata$sex)
+
+
+
+**The Scatterplot**
+The scatterplot is great for displaying numerical data that is measured on the ratio scale (a term that essentially means that zero and multiple values are meaningful) and can be used for univariate and multivariate analyses. Lines can be fitted to this plot for the purpose of carrying out regression. (Of course, being a statistical program, R can compute regression and correlation coefficients - again, beyond this level of study, but important enough to warrant further study by novices).
+
+
+plot(mydata$height)
+plot(mydata$age, mydata$height)
+
+
+## Customizing your plot# plot regression line
+When one studies the R documentation for any of the plotting functions, one will see that thare are numerous possibilities for customizing a plot. Customization is vital, because this is what will help the creator to properly communicate the meaning of the data displayed in the plot. Some of the major aspects included title, subtitles, legends, lines, text, colouring, etc. There is no way to fully expatiate on these capabilities of the software. This can only be acquired by constant practice and bold experimentation. Students are encouraged to use this tool in their everyday life as this will lead to proficiency. We will now modify the plots that we made earlier on. Feel free to copy the code into the console and play around with it to see what other possibilities you can create on your own.
+
+
+#Bar chart
+barplot(table(mydata$sex), main = "Sex distribution in dataset", col = 3, sub = "Just experimenting with plots", ylab = "No. of Persons", ylim = c(0, 16))
+
+
+# add a regression line to a scatterplot
+l <- lm(height ~ age, data = mydata); l # linear regression model; note coefficients of y = ax + b
+plot(mydata$age, mydata$height)
+abline(coef = coef(l), col = "red", lwd = 2)
+
+# Further customize the scatter plot
+# details of parameters available at ?par()
+plot(mydata$age, mydata$height,
+     col = c(male = "blue", female = "red"),
+     font = 2,
+     font.lab = 1,
+     font.axis = 1,
+     font.main = 1,
+     pch = c(77, 70),
+     cex = .8,
+     main = "Plot of Age vs. Height",
+     sub = "Sexes are compared",
+     xlab = "Age (yrs)",
+     ylab = "Height (m)",
+     axes = FALSE)
+box(bty = "u")
+axis(1, at = 20:45); axis(2, las = 2)
+grid()
+abline(a = mean(mydata$height), b = 0, lty = "dotted",lwd = 2, col = "purple")
+legend(37, 1.85,                    # see ?legend() for details
+       legend = c("M", "F"),
+       text.col = c("blue", "red"),
+       bg = "grey",
+       cex = .8,
+       text.width = .4,
+       horiz = TRUE,
+       title = "Sex: ",
+       title.col = "black",
+       title.adj = .3)
+temp <- locator(1) # click on part where you want to place text before running the next line of code
+text(temp, "mean ht. = 1.18m", cex = .8) # add string
+
+**Exercise**: Re-run the code for the first scatterplot. Compare this plot with the customized version. Study the code with colleagues and try to spot the various changes that took place and identify the various code snippets behind those changes.
+
+**A Comment on R Graphics**
+What we've done so far is just taste of a myriads of possibilities for plotting with R. For the beginner, the above code will look daunting or even intimidating. First of all note that though there are as many as 29 lines of code in the example, there are actually only 8 code instruction lines - some of the functions don't even have arguments. The multiple lines were created because we tried to increase readability of the longer code snippets. This is a good coding style, but it is not mandatory - a single line that extends beyond the limits of the computer screen will work exactly the same way as the folded version.
+
+One of the great things about code like this, is that having created it, it is something that can be easily shared, archived, reproduced or updated. For instance, if we want to change the colour of the dotted line that intersects the y-axis to orange, all we need to do is to go to the function and overwrite the relevant portion i.e. ``` col = "orange" ```.
+
+One of the things about customizing plots in R,is that once you have created the main graphic e.g. a histogram, you can add other layers such as lines, grids, legends, etc. on top of it. This is apparent in the example we used, where plot() was the main function and we added axes, a box, a legend, a grid, a dotted line at y = mean and even some explanatory text.
+
+The key to acquiring proficiency in generating good plots, again, is practice. Students are advised to use every opportunity to try their hands on this at work, at school, at home. 
+
+These and much more can be done with the R basic installation, but when other R graphics packages are employed, magic begin to occur. Unfortunately, we cannot do justice to any of these packages here but with a little effort through other training opportunities and self-study, the power of the other packages will be better appreciated.
+
+On a final note, it is necessary to point out that there are many domain-specific packages available on CRAN, Github and Bioconductor. It will be most helpful for the student to network with fellow R users in his or her area of expertise. That way, it will be easy to know what kind of packages are available to extend R's capabilities in such a way as to enhance work in a specific field.
 
 ## Creating multiple plots
 
 
-# Basic Data Analysis in R
-## Data Cleaning
-
-## Exploratory Data Analysis
-
-
-
-# The Next Level
-What remains to be learnt
-1. **"apply"** family of functions
-2. Writing your own functions
-3. Graphics on steroids - ggplot2 package
-4. Shiny
-5. Writing an R package
-
-## R Packages
-
 ## R Studio
+Simply put, this is R on steroids.
 
-## Github
+RStudio is an integrated development environment (IDE) that enables the user to perform R tasks with greater productivity. RStudio also has many rich capabilities that will help you to create your own packages, build and debug functions, develop reports and many others. You're encourage to rehearse the content of this manual, only this time using RStudio, and it will be apparent how easy it is to work in R using the IDE. 
 
-## Collaboration
+**Download and install RStudio**
+
 
 ## Resources
+There are a number of resources available online to help you grow in your use of R. Please be aware that R is a powerful tool that will greatly enhance your work and study.
 
-
+CRAN
+Stack overflow
+Github
+Kaggle
