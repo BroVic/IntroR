@@ -732,14 +732,14 @@ These and much more can be done with the R basic installation, but when other R 
 On a final note, it is necessary to point out that there are many domain-specific packages available on CRAN, Github and Bioconductor. It will be most helpful for the student to network with fellow R users in his or her area of expertise. That way, it will be easy to know what kind of packages are available to extend R's capabilities in such a way as to enhance work in a specific field.
 
 ## Creating multiple plots
-
+R allows you to create multiple plots from your data. This is useful when you want to explore or display key differences between variables from the dataset.
 
 ## R Studio
-Simply put, this is R on steroids.
+Simply put, this is _R on steroids_.
 
-RStudio is an integrated development environment (IDE) that enables the user to perform R tasks with greater productivity. RStudio also has many rich capabilities that will help you to create your own packages, build and debug functions, develop reports and many others. You're encourage to rehearse the content of this manual, only this time using RStudio, and it will be apparent how easy it is to work in R using the IDE. 
+RStudio is an integrated development environment (IDE) that enables the user to perform R tasks with greater productivity. RStudio also has many rich capabilities that will help you to create your own packages, build and debug functions, develop reports and many others. You're encouraged to rehearse the content of this manual, only this time using RStudio, and it will be apparent how easy it is to work in R using the IDE. 
 
-**Download and install RStudio**
+[Download and install RStudio](www.rstudio.com)
 
 
 ## Resources
