@@ -1,31 +1,37 @@
 ---
 title: "Introduction to R"
 author: "Victor Ordu"
-date: "7 January 2016"
-output: 
-  html_document: 
+output:
+  html_document:
     toc: yes
+  word_document: default
 ---
 
 #	Introduction
 ## Prerequisites
-a. Be able to see at a computer screen
-b. Be able to hit the keys of a computer keyboard
-c. Be willing and eager to learn
-d. Be adventurous and courageous
+To participate effectively in this course, you will need to fufil the following requirements:
+a. You should be able to see at a computer screen
+b. You should be able to hit the keys of a computer keyboard
+c. You must be willing and eager to learn
+d. You need to be adventurous (and a little courage will help, too!)
 	
 ## What is R?
-R is a programming language developed in the 1980s for the purpose of running statistical analyses amongst other capabilities. From its early days it has become a widely used tool by data scientists and is growing in popularity.
+R is a programming language for statistical computing. It developed in the 1980s, by two researchers from the University of Auckland, New zealand, for the purpose of running statistical analyses amongst other capabilities. Their names are Robert Gentleman and Ross Ithaka. R has grown to become one of the most widely used tools by data scientists and its popularity is on the rise.
 	
-Your first encounter with R may appear quite intimidating, especially if you don't have any experience in writing computer code, but R has been designed in such a way that you should be up and running in no time.
+Your first encounter with R may appear quite intimidating, especially if you don't have any experience with using computer languages. However, experience has shown that, being a relatively high-level language, users with little or not understanding of computer architecture can developing a working knowledge that is sufficient for carrying out data-related operations and tasks. One of the aims of this manual is to have the R novice up and running in no time.
 
-Let's jump in immediately. Consider these 2 lines of code:
+Now, let's jump in immediately. Consider these 2 lines of code:
 ```{r, eval=FALSE}
 x <- 1:10
 x
 ```
-We have created an "object" in R called x. The arrow-like symbol is called the "assignment key" and the numbers on the right hand side of this symbol effectively mean "1 to 10". When you execute the second line of this code, the R console print out the number 1 through 10. This object "x" is called a vector. Note that you generate the assignment key by typing the "less than" (<) key followed by the "hyphen or dash" (-) key.
-	
+We have created an "object" in R called x. The arrow-like symbol ``` <- ``` is called the "assignment key" and the expression on the right hand side of this symbol means " from 1 to 10". When you execute or "run" the second line of this code, the R console print out the numbers 1 through 10.
+
+![An R object, 'x'](figures/R_object.png)
+
+In this particular example, the object "x" is called a vector (in R, we have differenct types of objects). So, in essence, we now have an R object labelled 'x', and x contains the numbers 1 - 10.All of this will be explained as we proceed. 
+(Note that we generated the assignment key by typing the "less than" (<) key followed by the "dash" (-) key.)
+
 ## The pros and cons of using R
 There are several advantages to using R, and as anything in life, there are some disadvantages.
 
@@ -39,7 +45,7 @@ f. It is highly extensible.
 g. It ensure reproducibility of results.
 h. It encourages transparency in methodology.
 	
-Disadvantages
+Disadvantages:
 a. It is difficult to master.
 b. The language can be quirky and is not very intuitive.
 	
@@ -48,7 +54,9 @@ Downloading R is very easy. To get the latest version, visit www.r-project.org. 
 	
 ## The R Console
 To open your R installationWhen you can double-click your R Desktop icaon. You will encounter the R console. If you are not familiar with command line operations, don't panic.
-When you write a piece of code, R will read the instruction you have passed to it just they way we do - from left to right, top to bottom (yeah, we know that some people read from right to left, but never mind that). Now you're encouraged to create the object "x" as exemplified above. Do it now. Type each line of the code into the console and hit "Enter" after each line. Note that the second line has only on character
+
+When you write a piece of code, R will read the instruction you have passed to it just they way we do - from left to right, top to bottom (yeah, we know that some people read from right to left, but never mind that). Now you're encouraged to create the object "x" as exemplified above. Do it now. Type each line of the code into the console and hit "Enter" after each line. Note that the second line has only on character.
+
 ```{r}
 	# Create an object x
   x <- 1:10
