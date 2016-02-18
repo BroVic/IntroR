@@ -1,10 +1,12 @@
 Package: IntroR
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1
+Title: An Introductory R Training Course Targeting Nigerian Public Servants
+Version: 0.0.0.9000
 Date: 2016-02-08
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Author@R: person("Victor", "Ordu", email = "victorordu@outlook.com",
+    role = c("aut", "cre"))
+Description: This package contains a training manual, sample datasets and
+    other related material for use by participants in this R training program.
+License: CCO
 LazyData: TRUE
+BugReports: https://github.com/BroVic/IntroR/issues
