@@ -1,0 +1,112 @@
+---
+title: "Simple Plotting in R"
+author: "Victor Ordu"
+date: "11 June 2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Outline
+
+- `base` (Not actually a package)
+- `ggplot2`
+
+
+## Our Dataset
+We will work with the in-built `airquality` dataset, which represents daily air quality measurements in New York from 1st May to 30th September 1973
+```{r data}
+df <- airquality
+str(df)
+```
+
+## Matrix of scatterplots
+
+```{r pairs}
+pairs(df)
+```
+
+## Plotting of Numerical data
+Histograms are particulary great for representing **discrete** numerical data i.e. integers.
+```{r}
+hist(df$Ozone)
+```
+
+## Plotting of Numerical Data (II)
+Histograms are good at displaying the 'skew' of the distribution around an estimator such as the arithmetic mean or the median.
+
+```{r hist2}
+## Compare this with the other histogram
+hist(df$Solar.R)
+```
+
+## Frequency polygon
+Like histograms, frequency polygons are good for discrete values.
+
+For Ozone:
+```{r}
+suppressPackageStartupMessages(library(mosaic))
+freqpolygon(df$Ozone)
+```
+
+
+## Frequency Polygons (II)
+
+For Solar Radiation:
+```{r}
+freqpolygon(df$Solar.R)
+```
+## Scatterplot
+
+```{r scatter}
+plot(df$Ozone)
+```
+
+
+## Do some data transformation
+
+```{r transform}
+df$Mth.Name <- month.name[df$Month]
+df$Mth.Name <-
+  factor(df$Mth.Name, levels = month.name[5:9], ordered = TRUE)
+head(df$Mth.Name)
+```
+
+```{r month tail}
+tail(df$Mth.Name)
+```
+
+We have created a new column called `Mth.Name` and made it an ordered factor (categorical variable) of the months of May through September. Can be confirmed using functions like `str`, `dim`, etc.
+
+## Bar charts
+
+```{r bar chart}
+tab <- table(df$Mth.Name)
+barplot(tab)
+```
+
+
+## Box-and-whiskers plot
+
+```{r box-and-whiskers}
+boxplot(df$Ozone)
+```
+
+
+## 1-D Scatter plot
+```{r strip 1-D scatter}
+stripchart(df$Ozone)
+```
+
+
+## Time Series
+
+```{r time series}
+ozts <-
+  ts(df$Temp, start = 5, end = 9, frequency = length(levels(df$Mth.Name)))
+plot(ozts)
+
+```
+
