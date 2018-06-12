@@ -1,2 +1,2 @@
 # IntroR
-Introductory R training targeted at Nigeria's public service
+A gentle introduction to statistical programming with R.
