@@ -16,61 +16,90 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ## Our Dataset
-We will work with the in-built `airquality` dataset, which represents daily air quality measurements in New York from 1st May to 30th September 1973
+- We will work with the in-built `airquality` dataset.
+- It represents daily air quality measurements in New York from 1st May to 30th September 1973.
 ```{r data}
 df <- airquality
 str(df)
 ```
 
-## Matrix of scatterplots
+## Plotting of Numerical Data
+- Histograms are for representing **discrete** numerical data i.e. integers.
+- They are particularly good at displaying the 'skew' of the distribution around an estimator such as the arithmetic mean or the median.
 
-```{r pairs}
-pairs(df)
-```
+*** 
 
-## Plotting of Numerical data
-Histograms are particulary great for representing **discrete** numerical data i.e. integers.
+*For Ozone:*
 ```{r}
 hist(df$Ozone)
 ```
 
-## Plotting of Numerical Data (II)
-Histograms are good at displaying the 'skew' of the distribution around an estimator such as the arithmetic mean or the median.
+***
 
+*For Solar Radiation:*
 ```{r hist2}
 ## Compare this with the other histogram
 hist(df$Solar.R)
 ```
 
-## Frequency polygon
-Like histograms, frequency polygons are good for discrete values.
+## Frequency Polygons
+ - Also good for discrete values.
+ - The function `freqpolygon()` is from the `mosaic` package. 
 
-For Ozone:
-```{r}
-suppressPackageStartupMessages(library(mosaic))
+***
+
+*For Ozone:*
+```{r, mosaic, message=FALSE}
+library(mosaic)
 freqpolygon(df$Ozone)
 ```
 
+*** 
 
-## Frequency Polygons (II)
-
-For Solar Radiation:
-```{r}
+*For Solar Radiation:*
+```{r freqpoly2}
 freqpolygon(df$Solar.R)
 ```
-## Scatterplot
 
+## Scatter Plots
+- Unlike the previous charts, which represent data as 'collectives', scatter plots are used to represent individual observations.
+- Quite useful in bivariate analyses - to examine relationship between 2 discrete numerical variables (e.g. correlation).
+
+***
+
+*For Ozone:*
 ```{r scatter}
+## Not all that useful for univariate analysis
 plot(df$Ozone)
 ```
 
+***
+
+*For Solar Radiation:*
+```{r scatter2}
+plot(df$Solar.R)
+```
+
+## Matrix of Scatter Plots
+
+```{r pairs}
+pairs(df)
+```
 
 ## Do some data transformation
-
+Create a **brand new** column called `Mth.Name`
+- that contains the months May to September
+- properly spelt out (rather than as numbers as we have in the original dataset).
+- placed in chronological order (i.e. an ordinal variable).
 ```{r transform}
 df$Mth.Name <- month.name[df$Month]
 df$Mth.Name <-
   factor(df$Mth.Name, levels = month.name[5:9], ordered = TRUE)
+```
+
+***
+View the results:
+```{r month head}
 head(df$Mth.Name)
 ```
 
@@ -78,9 +107,10 @@ head(df$Mth.Name)
 tail(df$Mth.Name)
 ```
 
-We have created a new column called `Mth.Name` and made it an ordered factor (categorical variable) of the months of May through September. Can be confirmed using functions like `str`, `dim`, etc.
+- We have created a new column called `Mth.Name` and made it an ordered factor (categorical variable) of the months of May through September.
+- Can be confirmed using functions like `str()`, `dim()`, etc.
 
-## Bar charts
+## Bar Charts
 
 ```{r bar chart}
 tab <- table(df$Mth.Name)
@@ -88,25 +118,100 @@ barplot(tab)
 ```
 
 
-## Box-and-whiskers plot
-
+## Box-and-Whiskers Plot
+*For Ozone*:
 ```{r box-and-whiskers}
 boxplot(df$Ozone)
 ```
 
+***
 
-## 1-D Scatter plot
+*For Solar Radiation*:
+```{r box-and-whiskers2}
+boxplot(df$Solar.R)
+```
+
+## 1-D Scatter Plot
+The one-dimensional scatter plot is useful for displaying 'spread' in small datasets.  
+
+***
+
+*For Ozone*:
 ```{r strip 1-D scatter}
 stripchart(df$Ozone)
 ```
 
+***
+
+*For Solar Radiation*:
+```{r}
+stripchart(df$Solar.R)
+```
+
+## Functions (*A Digression*)
+Before we proceed, this is a good opportunity to introduce the use of functions in R.
+We use functions to modularise our code i.e. encapsulate an expression or a series of expressions. Typically, functions are given a name and can be reused once they are loaded into an R session. 
+
+Example 1 - we will create a function that returns the string `Hello, R!`. This function has no parameters.
+```{r}
+## Define a function
+sayHi <- function() "Hello, R!"
+
+## Run the function
+sayHi()
+```
+ 
+***
+
+Example 2 - we will create a function called `addTwo`, which will add `2` to any number that is passed to it as an argument
+```{r}
+## Define another function
+addTwo <- function(x) {
+  x + 2
+}
+
+## Create a variable
+num <- 42
+
+## Run the function
+addTwo(num)         # ditto addTwo(42)
+```
 
 ## Time Series
+- We have opted to create a function `my_ts` so that we can repeatedly run some expressions for plotting the time series.
+- The function has a parameter `var`
+- It will:
+1. Build a time-series object (using the `ts()` function) and
+2. Draw a plot.
+```{r define function}
+my_ts <- function(var) {
+  ## Expression 1: Create a May-Sept time-series object internally
+  t <- ts(var, start = 5, end = 9, frequency = 5)
+  
+  ## Expression 2: Display a plot of the time-series
+  plot(t)
+}
+```
 
-```{r time series}
-ozts <-
-  ts(df$Temp, start = 5, end = 9, frequency = length(levels(df$Mth.Name)))
-plot(ozts)
+*** 
+We now run the function using the *Ozone* column as an argument to `var`
+```{r run my_ts}
+my_ts(var = df$Ozone)
+```
 
+***
+
+For other variables in the data frame  
+*Solar Radiation*:  
+```{r timeseries}
+my_ts(var = df$Solar.R)
+```
+
+***
+
+*Temperature*:  
+**Note**: R functions can usually identify parameters by position.
+```{r timeseries2}
+my_ts(df$Temp)    ## 'var' is not explicitly mentioned
 ```
 
