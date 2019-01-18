@@ -44,18 +44,31 @@ randomNum <- runif(10, 10, 20)
 # from data in the babynames package. Download and install if necessary
 # BONUS: Write a line of code that will enable you to check if a package
 # is installed or not.
-firstName <- sample(babynames::babynames$name, 10)
+install.packages('babynames')
+library(babynames)
+help(package = 'babynames')
+str(babynames)
+allNames <- babynames$name
+firstName <- sample(allNames, 10)
+
+'babynames' %in% .packages(all.available = TRUE)
+"babynames" %in% installed.packages()[, "Package"]
+if (requireNamespace("babynames")) print("package is there")
+
+# firstName <- sample(babynames::babynames$name, 10)
 
 
-# 3. Create a vector with a sequence from 1 to 10. Call is serialNo.
+# 3. Create a vector with a sequence from 1 to 10. Call it serialNo.
 serialNo <- seq_len(10)
 
 # 4. Using the vector from step 2 above as a guide, create a character vector with elements
 # "M" and "F" named gender. Thereafter convert it into a categorical variable i.e. factor
 # BONUS: The factor's levels are presented alphabetically by default. Make it
-# such that the when you run levels(gender), the first element is "M".
+# such that  when you run levels(gender), the first element is "M".
+firstName
 gender <- c('F', 'M', 'M', 'F', 'M', 'F', 'M', 'F', 'M', 'F')
 gender <- factor(gender, levels = c('M', "F"))
+gender
 
 # 5. Create a matrix called randMat with columns in this order: serialNo, firstName
 # gender and the one with the random numbers
@@ -65,4 +78,4 @@ randMat
 # 6. Examine the matrix. What do you notice?
 # BONUS: Check the type of the matrix and try carrying out arithmetic on the
 # 'numerical' data
-
+typeof(randMat)
