@@ -1,0 +1,79 @@
+---
+title: "More fun plotting in R"
+author: "Victor Ordu"
+date: "25 June 2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, read data, echo=FALSE}
+df <- readRDS("../../data/slides-data.rds")
+```
+
+# New stuff
+
+## Scatter plots with fitted line
+```{r wnd-tmp plot, eval=FALSE}
+plot(df$Wind, df$Temp, main = "Wind vs. Temperature", ylab = "Temperature (Fahrenheit)", xlab = "Wind (mph)", pch = 16, col = "blue")
+mod <- lm(Temp ~ Wind, data = df); coef <- mod$coefficients
+abline(coef = coef, col = "red", lwd = 2)
+legend("bottomleft", legend = paste(names(coef), round(coef, 2)), bg = "gray", cex = .7)
+grid(col = "darkgrey")
+```
+
+***
+
+```{r wnd-tmp plot, echo=FALSE}
+```
+
+***
+
+```{r wnd-oz plot, eval=FALSE}
+plot(df$Wind, df$Ozone, main = "Wind vs. Ozone", ylab = "Ozone (ppb)", xlab = "Wind (mph)", pch = 16, col = "red")
+mod1 <- lm(Ozone ~ Wind, data = df); coef1 <- mod1$coefficients
+abline(coef = coef1, col = "blue", lwd = 2)
+legend("topright", legend = paste(names(coef1), round(coef1, 2)), bg = "gray", cex = .7)
+
+grid(col = "darkgrey")
+```
+
+***
+
+```{r wnd-oz plot, echo=FALSE}
+```
+
+***
+
+```{r end scatter, echo=FALSE}
+cols <- c("blue", "green", "red", "black", "cyan")
+plot(df$Ozone,
+     df$Temp,
+     main = "Ozone vs. Temperature",
+     ylab = expression({"Temperature ("^0 + "F"}),
+     xlab = "Ozone (ppb)",
+     pch = 2,
+     col = sapply(df$Mth.Name, function(s)
+       switch(as.character(s),
+              May = cols[1],
+              June = cols[2],
+              July = cols[3],
+              August = cols[4],
+              September = cols[5])))
+
+legend("bottomright", legend = levels(df$Mth.Name), fill = cols, cex = .7)
+
+grid()
+```
+
+***
+
+Study the code and share any insights...
+
+```{r end scatter, eval=FALSE}
+```
+
+
+
